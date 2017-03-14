@@ -1,5 +1,6 @@
 //create a new component called Todos renders a Bootstrap list-group UL tag.
 import React from 'react';
+import AddTodo from './AddTodo';
 import Todo from './Todo';
 
 class Todos extends React.Component {
