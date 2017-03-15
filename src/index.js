@@ -1,11 +1,13 @@
-//load react 
+// Load React
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-//load components
-import Todos from './components/Todos';
+// Load components
+import Routes from './Routes';
+import './index.css';
 
+// Render root component
 ReactDOM.render(
-  <Todos />,
-  document.getElementById('root')
+    <Routes />,
+    document.getElementById('root')
 );

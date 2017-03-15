@@ -6,3 +6,8 @@ img{
   width: 100%;
 }
 
+.done {
+
+  text-decoration: line-through;
+
+}
