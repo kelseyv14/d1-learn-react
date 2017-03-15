@@ -1,26 +1,63 @@
-//Add a new component called AddTodo with a category select tag, and a description input field (with an Add Todo button using a Bootstrap input-group). We do not use the id="" attribute in HTML any more, and you cannot use the document variable in JS either. So, at this time just get the AddTodo component showing up above the list of todos. We'll work on making it work tomorrow.
+import React from 'react'
 
 class AddTodo extends React.Component {
-    render() {
-        return <select className="category">  
-                   <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Description"/>
-                        <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">AddTodo</button>
-                         </span>
-                  
-                     </div>
-                </select>
-    }
-} 
+    constructor(props) {
+        super(props)
+        this.addTodo = this.addTodo.bind(this)
 
+        this.state = {
+            description: '',
+            category: ''
+        }
+    } 
+
+    addTodo(getTodos) {
+        
+            fetch('/api/v1/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    todo: this.state.description,
+                    category: this.state.category,
+                    completed: false
+                })
+            })
+            .then(response => response.json())
+            .then(response => {
+                this.setState({
+                    description: '',
+                    category: ''
+                })
+                getTodos()
+            })
+        }
+    
+
+    render() {
+        return <div>
+            <div className="form-group">
+                <select className="form-control" value={this.state.category} onChange={(e) => this.setState({category: e.target.value})}>
+                    <option value="">Select Category...</option>
+                    <option value="fun">Fun</option>
+                    <option value="home">Home</option>
+                    <option value="school">School</option>
+                    <option value="work">Work</option>
+                </select>
+            </div>
+            <div className="form-group">
+                <div className="input-group">
+                    <input type="text" className="form-control" value={this.state.description} onChange={(e) => this.setState({description: e.target.value})} />
+                    <span className="input-group-btn">
+                        <button className="btn btn-default" type="button" onClick={() => this.addTodo(this.props.getTodos)}>Add Todo</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+}
 
 export default AddTodo
 
 
-//"with a category select tag, and a description input field (with an Add Todo button using a Bootstrap input-group)"
-
-//from bootstrap--
-//Textual <input>s only --Avoid using <select> elements here as they cannot be fully styled in WebKit browsers.
-
-//tried following literally first but was confused with the wording "category select tag"...
